@@ -1,0 +1,16 @@
+main {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: system-ui;
+    margin:0 auto;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
