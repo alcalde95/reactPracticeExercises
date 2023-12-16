@@ -8,4 +8,5 @@ APIs:
 - Recupera un hecho aleatorio de gatos de la primera API
 - Recuperar la primera palabra del hecho
 - Muestra una imagen de un gato con la primera palabra.
+- Añade un botón que cada vez que se hace click se genera un nuevo randomFact
   
