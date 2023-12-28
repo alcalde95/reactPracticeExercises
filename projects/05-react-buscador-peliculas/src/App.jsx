@@ -1,30 +1,39 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import './App.css'
-import { searchMovies } from './services/movies'
-import responseMovies from './mocks/with-results.json'
-import withoutResults from './mocks/no-results.json'
 import { Movies } from './Components/Movies'
+import { useMovies } from './hooks/useMovies'
+import { useSearch } from './hooks/useSearch'
+
 function App() {
 
-  const movies = responseMovies.Search
-  const mappedMovies = movies?.map(movie => ({
-    id: movie.imdbID,
-    title: movie.Title,
-    year: movie.Year,
-    poster: movie.Poster
-  }))
+  const inputRef = useRef()
+  const { search, updateSearch, error} = useSearch()
+  const { movies: mappedMovies, getMovies } = useMovies({search})
+
+
+  const handleClick = (event) => {
+    event.preventDefault()
+    getMovies()
+  }
+
   return (
     <div className='page'>
       <header>
         <h1>Recomendador de películas</h1>
-        <form>
-          <input type="text" placeholder="Avengers, Matrix,..." />
+        <form onSubmit={handleClick}>
+          <input
+            style={{
+              border: '1px solid transparent',
+              borderColor: error ? 'red' : 'transparent'
+            }}
+            onChange={(event) => updateSearch(event.target.value)} value={search} type="text" ref={inputRef} placeholder="Avengers, Matrix,..." />
           <button type="submit">Buscar</button>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </header>
       <main>
-        <Movies movies={mappedMovies}/>
-    </main>
+        <Movies movies={mappedMovies} />
+      </main>
 
 
     </div >
